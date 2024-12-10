@@ -1,64 +1,47 @@
-import axios from 'axios';
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
-// Function to fetch data from the API
-async function fetchApi() {
-  const res = await axios.get('https://fakestoreapi.com/products');
-  return res.data;
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+// Fetch Data Function
+async function fetchData() {
+  let data = fetch("https://dummyjson.com/products")
+  data = await (await data).json()
+  return data.products
 }
 
-// Server-side fetching function
-export async function fet() {
-  const data = await fetchApi();  // Fetch the data
-  return {
-    props: { data },  // Pass the fetched data as a prop
-  };
-}
-
-function Page({ data }) {
-  if (!data) {
-    return <div>Loading...</div>;  // If data is undefined, display loading message
-  }
+// Page Component
+async function page() {
+  let product = await fetchData();
+  console.log(product);
 
   return (
-    <Box sx={{ padding: 4 }}>
-      <Typography variant="h3" gutterBottom align="center">
-        Product List
+    <Container>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Products
       </Typography>
-      
-      <Grid container spacing={4}>
-        {data.map((product) => (
-          <Grid item xs={12} sm={6} md={4} key={product.id}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image={product.image}
-                alt={product.title}
-              />
+      <Grid container spacing={3}>
+        {product.map((item) => (
+          <Grid item xs={12} sm={6} md={4} key={item.id}>
+            <Card>
               <CardContent>
-                <Typography variant="h6" component="div" gutterBottom>
-                  {product.title}
+                <Typography variant="h6" component="h2">
+                  {item.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {product.description.substring(0, 100)}...
+                  {item.description}
                 </Typography>
-                <Typography variant="h6" color="primary" sx={{ mt: 2 }}>
-                  ${product.price}
+                <Typography variant="body1" color="primary">
+                  ${item.price}
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
         ))}
       </Grid>
-    </Box>
+    </Container>
   );
 }
 
-export default Page;
+export default page;
