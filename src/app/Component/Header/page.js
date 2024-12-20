@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Data from '../Api/page'
+// import Data from '../api/hello/page'
 
 function Page() {
   return (
@@ -30,7 +30,7 @@ function Page() {
         </Box>
       </Toolbar>
     </AppBar>
-    <Data />
+    {/* <Data /> */}
     </>
   );
 }
